@@ -30,7 +30,20 @@ public class Stop {
         }
     }
 
+    public void setReachableAt(Time time){
+        reachableAt = time;
+    }
+
+    public void setReachableVia(LineName lineName){
+        reachableVia = lineName;
+    }
+
     public Map.Entry<Time,LineName> getReachableAt(){
         return new AbstractMap.SimpleEntry<>(reachableAt, reachableVia);
+    }
+
+    public void clean(){
+        reachableVia = null;
+        reachableAt = null;
     }
 }

@@ -35,6 +35,11 @@ public class LineSegment {
     }
 
     public void incrementCapacity(Time startTime){
-        numberOfPassengers.put(startTime,numberOfPassengers.get(startTime) + 1);
+        if(!numberOfPassengers.containsKey(startTime)) numberOfPassengers.put(startTime,1);
+        else numberOfPassengers.put(startTime,numberOfPassengers.get(startTime) + 1);
+    }
+
+    public void clean(){
+        numberOfPassengers.clear();
     }
 }
