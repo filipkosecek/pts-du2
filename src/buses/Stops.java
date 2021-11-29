@@ -3,16 +3,21 @@ package buses;
 import java.util.*;
 
 public class Stops implements StopsInterface{
+    private final Factory factory;
     private final HashMap<StopName, Stop> stops;
     private StopName startingStop;
     private Time startingTime;
 
-    public Stops(){
-        this.stops = new HashMap<>();
+    public Stops(Factory factory){
+        this.factory = factory;
+        stops = new HashMap<>();
     }
 
     @Override
     public void setStartingStop(StopName startingStop, Time startingTime){
+        if(!stops.containsKey(startingStop)){
+            stops.put(startingStop, factory.createStop(startingStop));
+        }
         this.startingStop = startingStop;
         this.startingTime = startingTime;
         stops.get(startingStop).setReachableAt(startingTime);
@@ -21,12 +26,21 @@ public class Stops implements StopsInterface{
 
     @Override
     public ArrayList<LineName> getLines(StopName stop){
-        return stops.get(stop).getLines();
+        try{
+            return stops.get(stop).getLines();
+        }catch(NoSuchElementException e){
+            stops.put(stop, factory.createStop(stop));
+            return stops.get(stop).getLines();
+        }
     }
 
     @Override
     public Map.Entry<Time, LineName> getReachableAt(StopName stop){
-        return stops.get(stop).getReachableAt();
+        try{
+            return stops.get(stop).getReachableAt();
+        }catch(NoSuchElementException e){
+            return null;
+        }
     }
 
     @Override
@@ -39,7 +53,6 @@ public class Stops implements StopsInterface{
 
     @Override
     public Map.Entry<StopName, Time> earliestReachableStopAfter(Time time){
-        //treba checknut ci tieto hodnoty nie su null
         Map.Entry<StopName, Time> earliest = null;
         for(Stop s : stops.values()){
             Map.Entry<StopName, Time> tmp = new AbstractMap.SimpleEntry<>(s.getStopName(),s.getReachableAt().getKey());

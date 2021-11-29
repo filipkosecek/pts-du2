@@ -59,6 +59,7 @@ public class Line {
             }
             prevStop = ls.nextStop();
         }
+        if(lastSegment == null) throw new RuntimeException();
         lastSegment.incrementCapacity(time);
         return prevStop;
     }

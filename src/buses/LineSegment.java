@@ -40,6 +40,8 @@ public class LineSegment {
     }
 
     public void clean(){
-        numberOfPassengers.clear();
+        for(Time t : numberOfPassengers.keySet()){
+            numberOfPassengers.put(t,0);
+        }
     }
 }

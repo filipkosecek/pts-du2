@@ -8,9 +8,9 @@ public class ConnectionSearch {
     private final StopsInterface stops;
     private final LinesInterface lines;
 
-    public ConnectionSearch(){
-        stops = new Stops();
-        lines = new Lines(null);
+    public ConnectionSearch(StopsInterface stops, LinesInterface lines){
+        this.stops = stops;
+        this.lines = lines;
     }
 
     public List<Triplet<StopName,Time,LineName>> search(StopName from, StopName to, Time when){
