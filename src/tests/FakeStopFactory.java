@@ -10,14 +10,19 @@ public class FakeStopFactory implements AbstractStopFactory {
         ArrayList<LineName> lines = new ArrayList<>();
         if(stop.getStopName().equals("a")) {
             lines.add(new LineName("1"));
-            lines.add(new LineName("2"));
             return new Stop(stop, lines);
         }
         if(stop.getStopName().equals("b")){
             lines.add(new LineName("1"));
+            lines.add(new LineName("2"));
             return new Stop(stop, lines);
         }
         if(stop.getStopName().equals("c")) {
+            lines.add(new LineName("1"));
+            lines.add(new LineName("2"));
+            return new Stop(stop, lines);
+        }
+        if(stop.getStopName().equals("d")){
             lines.add(new LineName("2"));
             return new Stop(stop, lines);
         }

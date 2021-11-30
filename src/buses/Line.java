@@ -28,7 +28,8 @@ public class Line {
 
     public void updateReachable(Time time, StopName stopName){
         if(startingTimes.size() <= 0) throw new RuntimeException();
-        Time tmp = startingTimes.get(0);
+        Time firstStartingTime = startingTimes.get(0);
+        Time tmp = new Time(firstStartingTime.getTime());
         int timeToDesiredStop = 0;
         int lineSegmentIndex = 0;
         if(!firstStop.getStopName().equals(stopName.getStopName())) {
@@ -36,19 +37,21 @@ public class Line {
                 Map.Entry<Time, StopName> pair = lineSegment.nextStop(tmp);
                 ++lineSegmentIndex;
                 if (pair.getValue().getStopName().equals(stopName.getStopName())) {
-                    timeToDesiredStop = pair.getKey().getTime() - tmp.getTime();
+                    timeToDesiredStop = pair.getKey().getTime() - firstStartingTime.getTime();
                     break;
                 }
+                tmp = new Time(pair.getKey().getTime());
             }
         }
+        int optimalStartingTime = 0;
         for(Time t : startingTimes) {
             if (t.getTime() + timeToDesiredStop >= time.getTime()) {
-                tmp = new Time(t.getTime());
+                optimalStartingTime = t.getTime();
                 break;
             }
         }
 
-        int timeFromStartingStop = tmp.getTime();
+        int timeFromStartingStop = optimalStartingTime + timeToDesiredStop;
         while(lineSegmentIndex < lineSegments.size()){
             Triplet<Time,StopName,Boolean> triplet =
                     lineSegments.get(lineSegmentIndex).nextStopAndUpdateReachable(new Time(timeFromStartingStop));
