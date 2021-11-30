@@ -27,4 +27,9 @@ public class Time {
     public int hashCode() {
         return Objects.hash(time);
     }
+
+    @Override
+    public String toString(){
+        return Integer.toString(time);
+    }
 }

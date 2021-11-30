@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.LinkedList;
 
 public class ConnectionSearch {
-    private final Stops stops;
+    private final StopsInterface stops;
     private final LinesInterface lines;
 
-    public ConnectionSearch(Stops stops, LinesInterface lines){
+    public ConnectionSearch(StopsInterface stops, LinesInterface lines){
         this.stops = stops;
         this.lines = lines;
     }
@@ -32,7 +32,8 @@ public class ConnectionSearch {
             result.addFirst(new Triplet<>(currentStop,tmp.getKey(),tmp.getValue()));
             currentStop = lines.updateCapacityAndGetPreviousStop(tmp.getValue(),currentStop, tmp.getKey());
         }
-        result.addFirst(new Triplet<>(from,when,null));
+        Map.Entry<Time, LineName> tmp = stops.getReachableAt(currentStop);
+        result.addFirst(new Triplet<>(currentStop,tmp.getKey(), tmp.getValue()));
         stops.clean();
         lines.clean();
         return result;

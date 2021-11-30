@@ -48,11 +48,11 @@ public class Line {
             }
         }
 
-        if(lineSegmentIndex == 0) ++lineSegmentIndex;
         int timeFromStartingStop = tmp.getTime();
         while(lineSegmentIndex < lineSegments.size()){
             Triplet<Time,StopName,Boolean> triplet =
                     lineSegments.get(lineSegmentIndex).nextStopAndUpdateReachable(new Time(timeFromStartingStop));
+            if(!triplet.getZ()) break;
             timeFromStartingStop = triplet.getX().getTime();
             ++lineSegmentIndex;
         }

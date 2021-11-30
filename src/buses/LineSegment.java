@@ -31,7 +31,7 @@ public class LineSegment {
 
     public Triplet<Time,StopName,Boolean> nextStopAndUpdateReachable(Time startTime){
         Time tmp = new Time(startTime.getTime() + timeToNextStop.getTimeDiff());
-        if(numberOfPassengers.get(startTime) >= capacity) return new Triplet<>(tmp, nextStop,false);
+        if(numberOfPassengers.get(startTime) != null && numberOfPassengers.get(startTime) >= capacity) return new Triplet<>(tmp, nextStop,false);
         stops.getStopByName(nextStop).updateReachableAt(new Time(startTime.getTime() + timeToNextStop.getTimeDiff()), lineName);
         return new Triplet<>(tmp, nextStop,true);
     }

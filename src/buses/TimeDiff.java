@@ -23,4 +23,9 @@ public class TimeDiff {
     public int hashCode() {
         return Objects.hash(timeDiff);
     }
+
+    @Override
+    public String toString(){
+        return Integer.toString(timeDiff);
+    }
 }

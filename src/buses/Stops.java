@@ -13,7 +13,9 @@ public class Stops implements StopsInterface{
 
     @Override
     public Stop getStopByName(StopName stopName){
-        if(!stops.containsKey(stopName)) throw new NoSuchElementException();
+        if(!stops.containsKey(stopName)){
+            stops.put(stopName, factory.createStop(stopName));
+        }
         return stops.get(stopName);
     }
 
@@ -50,17 +52,19 @@ public class Stops implements StopsInterface{
     }
 
     public Map.Entry<StopName, Time> earliestReachableStopAfter(Time time){
-        Map.Entry<StopName, Time> earliest = null;
-        for(Stop s : stops.values()){
-            Map.Entry<StopName, Time> tmp = new AbstractMap.SimpleEntry<>(s.getStopName(),s.getReachableAt().getKey());
-            if(tmp.getKey() == null || tmp.getValue() == null) continue;
-            if(earliest == null && tmp.getValue().getTime() > time.getTime()){
-                earliest = tmp;
-            }else if(tmp.getValue().getTime() > time.getTime() && tmp.getValue().getTime() < earliest.getValue().getTime()){
-                earliest = new AbstractMap.SimpleEntry<>(s.getStopName(), s.getReachableAt().getKey());
+        Time earliest = null;
+        StopName earliestStop = null;
+        for(StopName stopName : stops.keySet()){
+            Time current = stops.get(stopName).getReachableAt().getKey();
+            if(current.getTime() > time.getTime() &&
+                    (earliest == null || current.getTime() < earliest.getTime())){
+                earliest = new Time(current.getTime());
+                earliestStop = stopName;
             }
         }
-        return null;
+
+        if(earliest == null) return null;
+        return new AbstractMap.SimpleEntry<>(earliestStop, earliest);
     }
 
     public void clean(){
