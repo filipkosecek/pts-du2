@@ -1,5 +1,7 @@
 package buses;
 
+import java.util.Objects;
+
 public class Time {
     private int time;
 
@@ -19,5 +21,10 @@ public class Time {
     public boolean equals(Object o){
         if(!(o instanceof Time)) return false;
         return time == ((Time) o).getTime();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(time);
     }
 }

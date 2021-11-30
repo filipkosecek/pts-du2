@@ -1,5 +1,7 @@
 package buses;
 
+import java.util.Objects;
+
 public class LineName {
     private String name;
 
@@ -15,5 +17,10 @@ public class LineName {
     public boolean equals(Object o){
         if(!(o instanceof LineName)) return false;
         return name.equals(((LineName) o).getLineName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

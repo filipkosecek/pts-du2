@@ -1,7 +1,9 @@
 package buses;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
+import java.util.List;
 
 public class Line {
     private final LineName lineName;
@@ -16,8 +18,15 @@ public class Line {
         this.lineSegments = lineSegments; //lineSegments must be sorted
     }
 
+    public StopName getFirstStop(){
+        return firstStop;
+    }
+
+    public List<LineSegment> getLineSegments(){
+        return Collections.unmodifiableList(lineSegments);
+    }
+
     public void updateReachable(Time time, StopName stopName){
-        //mozno osetrit ci nevybehne mimo pola -> vyhodit vynimku
         if(startingTimes.size() <= 0) throw new RuntimeException();
         Time tmp = startingTimes.get(0);
         int timeToDesiredStop = 0;
@@ -40,7 +49,7 @@ public class Line {
         }
 
         if(lineSegmentIndex == 0) ++lineSegmentIndex;
-        int timeFromStartingStop = time.getTime();
+        int timeFromStartingStop = tmp.getTime();
         while(lineSegmentIndex < lineSegments.size()){
             Triplet<Time,StopName,Boolean> triplet =
                     lineSegments.get(lineSegmentIndex).nextStopAndUpdateReachable(new Time(timeFromStartingStop));

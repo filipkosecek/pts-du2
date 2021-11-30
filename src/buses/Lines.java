@@ -2,18 +2,25 @@ package buses;
 
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class Lines implements LinesInterface{
+    private AbstractLineFactory factory;
     private Map<LineName,Line> lines;
 
-    public Lines(Map<LineName,Line> lines){
-        this.lines = lines;
+    public Lines(AbstractLineFactory factory){
+        this.factory = factory;
     }
 
     @Override
     public void updateReachable(ArrayList<LineName> lines, Time time, StopName stopName){
         for(LineName line : lines){
-            this.lines.get(line).updateReachable(time,stopName);
+            try{
+                this.lines.get(line);
+            }catch(NoSuchElementException e){
+                this.lines.put(line, factory.createLine(line));
+                this.lines.get(line);
+            }
         }
     }
 

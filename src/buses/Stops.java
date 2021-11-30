@@ -3,28 +3,28 @@ package buses;
 import java.util.*;
 
 public class Stops implements StopsInterface{
-    private final Factory factory;
+    private final AbstractStopFactory factory;
     private final HashMap<StopName, Stop> stops;
-    private StopName startingStop;
-    private Time startingTime;
 
-    public Stops(Factory factory){
+    public Stops(AbstractStopFactory factory){
         this.factory = factory;
         stops = new HashMap<>();
     }
 
     @Override
+    public Stop getStopByName(StopName stopName){
+        if(!stops.containsKey(stopName)) throw new NoSuchElementException();
+        return stops.get(stopName);
+    }
+
     public void setStartingStop(StopName startingStop, Time startingTime){
         if(!stops.containsKey(startingStop)){
             stops.put(startingStop, factory.createStop(startingStop));
         }
-        this.startingStop = startingStop;
-        this.startingTime = startingTime;
         stops.get(startingStop).setReachableAt(startingTime);
         stops.get(startingStop).setReachableVia(null);
     }
 
-    @Override
     public ArrayList<LineName> getLines(StopName stop){
         try{
             return stops.get(stop).getLines();
@@ -34,7 +34,6 @@ public class Stops implements StopsInterface{
         }
     }
 
-    @Override
     public Map.Entry<Time, LineName> getReachableAt(StopName stop){
         try{
             return stops.get(stop).getReachableAt();
@@ -43,7 +42,6 @@ public class Stops implements StopsInterface{
         }
     }
 
-    @Override
     public void resetReachable(){
         for(Stop s : stops.values()){
             s.setReachableAt(null);
@@ -51,7 +49,6 @@ public class Stops implements StopsInterface{
         }
     }
 
-    @Override
     public Map.Entry<StopName, Time> earliestReachableStopAfter(Time time){
         Map.Entry<StopName, Time> earliest = null;
         for(Stop s : stops.values()){
@@ -66,7 +63,6 @@ public class Stops implements StopsInterface{
         return null;
     }
 
-    @Override
     public void clean(){
         for(Stop s : stops.values()){
             s.clean();

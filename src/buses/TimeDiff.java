@@ -1,5 +1,7 @@
 package buses;
 
+import java.util.Objects;
+
 public class TimeDiff {
     private int timeDiff;
 
@@ -15,5 +17,10 @@ public class TimeDiff {
     public boolean equals(Object o){
         if(!(o instanceof TimeDiff)) return false;
         return timeDiff == ((TimeDiff) o).getTimeDiff();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(timeDiff);
     }
 }

@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.LinkedList;
 
 public class ConnectionSearch {
-    private final StopsInterface stops;
+    private final Stops stops;
     private final LinesInterface lines;
 
-    public ConnectionSearch(StopsInterface stops, LinesInterface lines){
+    public ConnectionSearch(Stops stops, LinesInterface lines){
         this.stops = stops;
         this.lines = lines;
     }

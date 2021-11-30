@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StopFactory {
-    private final HashMap<StopName, ArrayList<LineName>> map;
+public class StopFactory implements AbstractStopFactory{
+    private final HashMap<StopName, ArrayList<LineName>> stops;
 
-    public StopFactory(Map<StopName, ArrayList<LineName>> input){
-        map = new HashMap<>(input);
+    public StopFactory(Map<StopName, ArrayList<LineName>> stops){
+        this.stops = new HashMap<>(stops);
     }
 
-    public Stop createStop(StopName stopName){
-        return new Stop(stopName, map.get(stopName));
+    @Override
+    public Stop createStop(StopName stop){
+        return new Stop(stop, stops.get(stop));
     }
 }

@@ -9,29 +9,31 @@ public class LineSegment {
     private final Map<Time,Integer> numberOfPassengers;
     private final LineName lineName;
     private final TimeDiff timeToNextStop;
-    private final Stop nextStop;
+    private final StopName nextStop;
+    private final StopsInterface stops;
 
-    public LineSegment(int capacity, LineName lineName, Stop nextStop, TimeDiff timeToNextStop){
+    public LineSegment(int capacity, LineName lineName, StopName nextStop, TimeDiff timeToNextStop, StopsInterface stops){
         this.capacity = capacity;
         numberOfPassengers = new HashMap<>();
         this.lineName = lineName;
         this.timeToNextStop = timeToNextStop;
         this.nextStop = nextStop;
+        this.stops = stops;
     }
 
     public Map.Entry<Time,StopName> nextStop(Time startTime){
-        return new AbstractMap.SimpleEntry<>(new Time(startTime.getTime() + timeToNextStop.getTimeDiff()), nextStop.getStopName());
+        return new AbstractMap.SimpleEntry<>(new Time(startTime.getTime() + timeToNextStop.getTimeDiff()), nextStop);
     }
 
     public StopName nextStop(){
-        return nextStop.getStopName();
+        return nextStop;
     }
 
     public Triplet<Time,StopName,Boolean> nextStopAndUpdateReachable(Time startTime){
         Time tmp = new Time(startTime.getTime() + timeToNextStop.getTimeDiff());
-        if(numberOfPassengers.get(startTime) >= capacity) return new Triplet<>(tmp, nextStop.getStopName(),false);
-        nextStop.updateReachableAt(new Time(startTime.getTime() + timeToNextStop.getTimeDiff()), lineName);
-        return new Triplet<>(tmp, nextStop.getStopName(),true);
+        if(numberOfPassengers.get(startTime) >= capacity) return new Triplet<>(tmp, nextStop,false);
+        stops.getStopByName(nextStop).updateReachableAt(new Time(startTime.getTime() + timeToNextStop.getTimeDiff()), lineName);
+        return new Triplet<>(tmp, nextStop,true);
     }
 
     public void incrementCapacity(Time startTime){
