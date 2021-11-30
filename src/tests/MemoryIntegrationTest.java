@@ -8,16 +8,12 @@ import java.util.List;
 
 public class MemoryIntegrationTest {
     private ConnectionSearch cs;
-    private FakeLineFactory fakeLineFactory;
-    private FakeStopFactory fakeStopFactory;
-    private StopsInterface stopsInterface;
-    private LinesInterface linesInterface;
 
     public void setup(){
-        fakeStopFactory = new FakeStopFactory();
-        stopsInterface = new Stops(fakeStopFactory);
-        fakeLineFactory = new FakeLineFactory(stopsInterface);
-        linesInterface = new Lines(fakeLineFactory);
+        FakeStopFactory fakeStopFactory = new FakeStopFactory();
+        StopsInterface stopsInterface = new Stops(fakeStopFactory);
+        FakeLineFactory fakeLineFactory = new FakeLineFactory(stopsInterface);
+        LinesInterface linesInterface = new Lines(fakeLineFactory);
         cs = new ConnectionSearch(stopsInterface, linesInterface);
     }
 
