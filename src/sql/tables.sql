@@ -28,7 +28,7 @@ CREATE TABLE line_segment(
 	line_segment_id integer PRIMARY KEY,
 	line_id integer REFERENCES line ON DELETE RESTRICT ON UPDATE CASCADE,
 	time_diff integer NOT NULL,
-	next_stop integer REFERENCES stop ON DELETE RESTRICT ON UPDATE CASCADE,
+	next_stop integer REFERENCES stop(stop_id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	capacity integer NOT NULL
 );
 
