@@ -68,8 +68,6 @@ public class Stops implements StopsInterface{
     }
 
     public void clean(){
-        for(Stop s : stops.values()){
-            s.clean();
-        }
+        stops.clear();
     }
 }

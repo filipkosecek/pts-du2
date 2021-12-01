@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LineSegment {
-    private final int capacity;
-    private final Map<Time,Integer> numberOfPassengers;
-    private final LineName lineName;
-    private final TimeDiff timeToNextStop;
-    private final StopName nextStop;
-    private final StopsInterface stops;
+    protected final int capacity;
+    protected final Map<Time,Integer> numberOfPassengers;
+    protected final LineName lineName;
+    protected final TimeDiff timeToNextStop;
+    protected final StopName nextStop;
+    protected final StopsInterface stops;
 
     public LineSegment(int capacity, LineName lineName, StopName nextStop, TimeDiff timeToNextStop, StopsInterface stops){
         this.capacity = capacity;
@@ -39,11 +39,5 @@ public class LineSegment {
     public void incrementCapacity(Time startTime){
         if(!numberOfPassengers.containsKey(startTime)) numberOfPassengers.put(startTime,1);
         else numberOfPassengers.put(startTime,numberOfPassengers.get(startTime) + 1);
-    }
-
-    public void clean(){
-        for(Time t : numberOfPassengers.keySet()){
-            numberOfPassengers.put(t,0);
-        }
     }
 }

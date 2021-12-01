@@ -33,8 +33,6 @@ public class Lines implements LinesInterface{
 
     @Override
     public void clean(){
-        for(Line line : lines.values()){
-            line.clean();
-        }
+        lines.clear();
     }
 }

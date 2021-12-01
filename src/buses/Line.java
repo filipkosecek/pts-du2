@@ -75,10 +75,4 @@ public class Line {
         lastSegment.incrementCapacity(time);
         return prevStop;
     }
-
-    public void clean(){
-        for(LineSegment ls : lineSegments){
-            ls.clean();
-        }
-    }
 }
