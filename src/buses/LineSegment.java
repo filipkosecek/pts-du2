@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class LineSegment {
     protected final int capacity;
-    protected final Map<Time,Integer> numberOfPassengers;
+    protected Map<Time,Integer> numberOfPassengers;
     protected final LineName lineName;
     protected final TimeDiff timeToNextStop;
     protected final StopName nextStop;

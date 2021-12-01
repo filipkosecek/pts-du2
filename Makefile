@@ -1,6 +1,5 @@
-testDB:
-	cat <<EOF | sqlite3 --init 
-	sqlite3 testDB.db < src/sql ... treba dopisat
+create:
+	cat <<EOF | sqlite3 --init src/sql/tables.sql database.db
 
 clean:
-	rm testDB.db
+	rm database.db
