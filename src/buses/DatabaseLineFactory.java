@@ -25,8 +25,8 @@ public class DatabaseLineFactory implements AbstractLineFactory{
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(databaseURL);
             getStartingTimesStatement = connection.prepareStatement("SELECT * " +
-                    "FROM bus b,line l" +
-                    "WHERE b.line_id=l.line_id AND l.line_name=?" +
+                    "FROM bus b,line l " +
+                    "WHERE b.line_id=l.line_id AND l.line_name=? " +
                     "ORDER BY b.starting_time ASC");
             getStartingTimesStatement.setString(1,lineName.getLineName());
             ResultSet rs = getStartingTimesStatement.executeQuery();
@@ -35,16 +35,16 @@ public class DatabaseLineFactory implements AbstractLineFactory{
                 startingTimes.add(new Time(rs.getInt("starting_time")));
             }
 
-            getLineSegments = connection.prepareStatement("SELECT *" +
-                    "FROM line_segment ls,line l" +
-                    "WHERE ls.line_id=l.line_id AND l.line_name=?" +
+            getLineSegments = connection.prepareStatement("SELECT * " +
+                    "FROM line_segment ls,line l " +
+                    "WHERE ls.line_id=l.line_id AND l.line_name=? " +
                     "ORDER BY ls.line_segment_id");
             getLineSegments.setString(1,lineName.getLineName());
             rs = getLineSegments.executeQuery();
             ArrayList<Time> tmpStartingTimes = new ArrayList<>(startingTimes);
             while(rs.next()){
                 HashMap<Time,Integer> initialNumberOfPassengers = new HashMap<>();
-                getInitialPassengersCount = connection.prepareStatement("SELECT * FROM bus_segment bs,line_segment ls" +
+                getInitialPassengersCount = connection.prepareStatement("SELECT * FROM bus_segment bs,line_segment ls " +
                         "WHERE bs.line_segment_id=ls.line_segment_id AND ls.line_segment_id=?");
                 getInitialPassengersCount.setInt(1, rs.getInt("line_segment_id"));
                 ResultSet passengersCountSet = getInitialPassengersCount.executeQuery();
@@ -57,19 +57,13 @@ public class DatabaseLineFactory implements AbstractLineFactory{
                         new StopName(rs.getString("next_stop")),new TimeDiff(rs.getInt("time_diff")),
                         stopsInterface, initialNumberOfPassengers,databaseURL,rs.getInt("line_segment_id")));
             }
+            getStartingTimesStatement.close();
+            getLineSegments.close();
+            getInitialPassengersCount.close();
+            connection.close();
             return new Line(lineName,firstStop,startingTimes,lineSegmentDatabases);
         }catch(Exception e){
             return null;
-        }finally {
-            try{
-                getStartingTimesStatement.close();
-                getInitialPassengersCount.close();
-                getLineSegments.close();
-                getInitialPassengersCount.close();
-                connection.close();
-            }catch (SQLException e){
-
-            }
         }
     }
 }

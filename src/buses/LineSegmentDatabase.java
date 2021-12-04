@@ -27,8 +27,8 @@ public class LineSegmentDatabase extends LineSegment{
         try{
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(databaseURL);
-            tmpStatement = connection.prepareStatement("SELECT line_id" +
-                                                            "FROM line_segment" +
+            tmpStatement = connection.prepareStatement("SELECT line_id " +
+                                                            "FROM line_segment " +
                                                             "WHERE line_segment_id=?");
             tmpStatement.setInt(1,segmentId);
             ResultSet tmpResultSet = tmpStatement.executeQuery();
@@ -37,10 +37,10 @@ public class LineSegmentDatabase extends LineSegment{
             else throw new RuntimeException();
             statement = connection.prepareStatement("UPDATE bus_segment SET passengers_count=number_of_passengers+1" +
                     "WHERE EXISTS(" +
-                    "SELECT *" +
-                    "FROM bus b" +
-                    "WHERE b.line_id=? AND b.starting_time+(SELECT SUM(ls.time_diff)" +
-                                            "FROM line_segment ls" +
+                    "SELECT * " +
+                    "FROM bus b " +
+                    "WHERE b.line_id=? AND b.starting_time+(SELECT SUM(ls.time_diff) " +
+                                            "FROM line_segment ls " +
                                             "WHERE ls.line_segment_id < ? AND ls.line_id=?" +
                                             ")=?" +
                     ")");
@@ -49,15 +49,10 @@ public class LineSegmentDatabase extends LineSegment{
             statement.setInt(3, lineId);
             statement.setInt(4, startTime.getTime());
             statement.executeUpdate();
-        }catch (Exception e){
+            statement.close();
+            connection.close();
+        }catch (Exception e) {
 
-        }finally {
-            try{
-                statement.close();
-                connection.close();
-            }catch (Exception e){
-
-            }
         }
     }
 }

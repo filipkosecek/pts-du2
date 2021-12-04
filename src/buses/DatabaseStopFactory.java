@@ -26,16 +26,11 @@ public class DatabaseStopFactory implements AbstractStopFactory{
             while(rs.next()){
                 lineNames.add(new LineName(rs.getString("line_name")));
             }
+            statement.close();
+            connection.close();
             return new Stop(stopName, lineNames);
         }catch(Exception e){
             return null;
-        }finally {
-            try{
-                statement.close();
-                connection.close();
-            }catch(Exception e){
-
-            }
         }
     }
 }
