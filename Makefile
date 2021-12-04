@@ -1,5 +1,6 @@
 create:
-	cat <<EOF | sqlite3 --init src/sql/tables.sql database.db
-
+	@[ -f database.db ] && rm database.db || true
+	cat <<EOF | sqlite3 --init znamky.sql database.db
+	
 clean:
-	rm database.db
+	@[ -f database.db ] && rm database.db || true
