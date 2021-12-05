@@ -29,12 +29,10 @@ public class Stops implements StopsInterface{
 
     // toto si preco cez try, nie ako setStartingStop? len ma zaujima :D
     public ArrayList<LineName> getLines(StopName stop){
-        try{
-            return stops.get(stop).getLines();
-        }catch(NoSuchElementException e){
+        if(!stops.containsKey(stop)){
             stops.put(stop, factory.createStop(stop));
-            return stops.get(stop).getLines();
         }
+        return stops.get(stop).getLines();
     }
 
     //niekto sa zbavil Optional :D
