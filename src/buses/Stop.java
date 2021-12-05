@@ -38,6 +38,7 @@ public class Stop {
         reachableVia = lineName;
     }
 
+    //toto podla mna strasne zavadza nazvom, ja som to menila z navrhu. (moj koment :D)
     public Map.Entry<Time,LineName> getReachableAt(){
         return new AbstractMap.SimpleEntry<>(reachableAt, reachableVia);
     }
