@@ -19,7 +19,7 @@ public class DatabaseStopFactory implements AbstractStopFactory{
             connection = DriverManager.getConnection(databaseURL);
             statement = connection.prepareStatement("SELECT l.line_name " +
                     "FROM stop_line sl,line l,stop s " +
-                    "WHERE s.stop_name=? AND sl.stop_id=s.stop_is AND sl.line_id=l.line_id");
+                    "WHERE s.stop_name=? AND sl.stop_id=s.stop_id AND sl.line_id=l.line_id");
             statement.setString(1,stopName.getStopName());
             ArrayList<LineName> lineNames = new ArrayList<>();
             ResultSet rs = statement.executeQuery();

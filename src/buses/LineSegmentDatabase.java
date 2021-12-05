@@ -35,7 +35,7 @@ public class LineSegmentDatabase extends LineSegment{
             int lineId;
             if(tmpResultSet.next()) lineId = tmpResultSet.getInt("line_id");
             else throw new RuntimeException();
-            statement = connection.prepareStatement("UPDATE bus_segment SET passengers_count=number_of_passengers+1" +
+            statement = connection.prepareStatement("UPDATE bus_segment SET passengers_count=number_of_passengers+1 " +
                     "WHERE EXISTS(" +
                     "SELECT * " +
                     "FROM bus b " +
