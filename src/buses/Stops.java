@@ -27,6 +27,7 @@ public class Stops implements StopsInterface{
         stops.get(startingStop).setReachableVia(null);
     }
 
+    // toto si preco cez try, nie ako setStartingStop? len ma zaujima :D
     public ArrayList<LineName> getLines(StopName stop){
         try{
             return stops.get(stop).getLines();
@@ -36,6 +37,7 @@ public class Stops implements StopsInterface{
         }
     }
 
+    //niekto sa zbavil Optional :D
     public Map.Entry<Time, LineName> getReachableAt(StopName stop){
         try{
             return stops.get(stop).getReachableAt();
@@ -55,7 +57,7 @@ public class Stops implements StopsInterface{
         Time earliest = null;
         StopName earliestStop = null;
         for(StopName stopName : stops.keySet()){
-            Time current = stops.get(stopName).getReachableAt().getKey();
+            Time current = stops.get(stopName).getReachableAt().getKey(); 
             if(current.getTime() > time.getTime() &&
                     (earliest == null || current.getTime() < earliest.getTime())){
                 earliest = new Time(current.getTime());
