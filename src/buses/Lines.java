@@ -16,7 +16,7 @@ public class Lines implements LinesInterface{
     @Override
     public void updateReachable(ArrayList<LineName> lines, Time time, StopName stopName){
         for(LineName line : lines){
-            if(this.lines.get(line) != null){
+            if(this.lines.get(line) != null){ //toto vracia null, nie hned vynimku ked sa to nenachadza? zaujimave
                 this.lines.get(line).updateReachable(time, stopName);
             }else{
                 Line tmp = factory.createLine(line);
