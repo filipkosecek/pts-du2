@@ -27,7 +27,7 @@ public class Line {
     }
 
     public void updateReachable(Time time, StopName stopName){
-        if(startingTimes.size() <= 0) throw new RuntimeException();
+        if(startingTimes.size() <= 0) throw new RuntimeException(); //moze byt velkost mensia ako nula? :D
         Time firstStartingTime = startingTimes.get(0);
         Time tmp = new Time(firstStartingTime.getTime());
         int timeToDesiredStop = 0;
@@ -56,7 +56,7 @@ public class Line {
             Triplet<Time,StopName,Boolean> triplet =
                     lineSegments.get(lineSegmentIndex).nextStopAndUpdateReachable(new Time(timeFromStartingStop));
             if(!triplet.getZ()) break;
-            timeFromStartingStop = triplet.getX().getTime();
+            timeFromStartingStop = triplet.getX().getTime(); //cenim vlastne metody getXYZ, ja mam ABC :DDDD 
             ++lineSegmentIndex;
         }
     }
