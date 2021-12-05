@@ -8,24 +8,24 @@ DROP TABLE IF EXISTS bus;
 DROP TABLE IF EXISTS bus_segment;
 
 CREATE TABLE stop(
-	stop_id integer PRIMARY KEY,
+	stop_id integer PRIMARY KEY AUTOINCREMENT,
 	stop_name varchar(30) NOT NULL,
 	UNIQUE(stop_name)
 );
 
 CREATE TABLE stop_line(
 	stop_id integer NOT NULL REFERENCES stop ON DELETE RESTRICT ON UPDATE CASCADE,
-	line_id integer NOT NULL REFERENCES line ON DELETE RESTRICT ON UDATE CASCADE
+	line_id integer NOT NULL REFERENCES line ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE line(
-	line_id integer PRIMARY KEY,
+	line_id integer PRIMARY KEY AUTOINCREMENT,
 	line_name varchar(30) NOT NULL,
-	first_stop integer REFERENCES stop(stop_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	first_stop integer REFERENCES stop(stop_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE line_segment(
-	line_segment_id integer PRIMARY KEY,
+	line_segment_id integer PRIMARY KEY AUTOINCREMENT,
 	line_id integer REFERENCES line ON DELETE RESTRICT ON UPDATE CASCADE,
 	time_diff integer NOT NULL,
 	next_stop integer REFERENCES stop(stop_id) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -33,9 +33,9 @@ CREATE TABLE line_segment(
 );
 
 CREATE TABLE bus(
-	bus_id integer PRIMARY KEY,
+	bus_id integer PRIMARY KEY AUTOINCREMENT,
 	line_id integer REFERENCES line ON DELETE RESTRICT ON UPDATE CASCADE,
-	starting_time integer NOT NULL,
+	starting_time integer NOT NULL
 );
 
 CREATE TABLE bus_segment(

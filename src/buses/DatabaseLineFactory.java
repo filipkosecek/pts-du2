@@ -42,10 +42,10 @@ public class DatabaseLineFactory implements AbstractLineFactory{
             getLineSegments.setString(1,lineName.getLineName());
             rs = getLineSegments.executeQuery();
             ArrayList<Time> tmpStartingTimes = new ArrayList<>(startingTimes);
+            getInitialPassengersCount = connection.prepareStatement("SELECT * FROM bus_segment " +
+                    "WHERE line_segment_id=?");
             while(rs.next()){
                 HashMap<Time,Integer> initialNumberOfPassengers = new HashMap<>();
-                getInitialPassengersCount = connection.prepareStatement("SELECT * FROM bus_segment bs,line_segment ls " +
-                        "WHERE bs.line_segment_id=ls.line_segment_id AND ls.line_segment_id=?");
                 getInitialPassengersCount.setInt(1, rs.getInt("line_segment_id"));
                 ResultSet passengersCountSet = getInitialPassengersCount.executeQuery();
                 for(int i = 0; i < tmpStartingTimes.size() && passengersCountSet.next(); i++){
