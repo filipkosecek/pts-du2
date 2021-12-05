@@ -29,6 +29,7 @@ public class LineSegment {
         return nextStop;
     }
 
+    //ja by som to tu rovno pridala do mapy ked to nenajdes, ale pri increment to aj tak overujes, tak asi je to jedno :D
     public Triplet<Time,StopName,Boolean> nextStopAndUpdateReachable(Time startTime){
         Time tmp = new Time(startTime.getTime() + timeToNextStop.getTimeDiff());
         if(numberOfPassengers.get(startTime) != null && numberOfPassengers.get(startTime) >= capacity) return new Triplet<>(tmp, nextStop,false);
