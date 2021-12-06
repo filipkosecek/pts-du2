@@ -1,8 +1,6 @@
 package buses;
 
-import java.util.List;
 import java.util.Map;
-import java.util.LinkedList;
 
 public class ConnectionSearch {
     private final StopsInterface stops;
@@ -10,6 +8,8 @@ public class ConnectionSearch {
     
     //tuto by som zmenila konstruktor na factory, lebo aj lines a aj stops mas na factory, tak by si to rovno poslal tam
     //davalo by to podla mna vacsi zmysel
+    //EDIT: mne sa to zdalo ako odlahcenie ConnectionSearch pretoze stops aj lines maju referenciu na prislusnu factory a tym padom ConnectionSearch
+    //nemusi vytvaranie stopiek a liniek vobec riesit vzdy si len vypyta potrebne informacie
     
     public ConnectionSearch(StopsInterface stops, LinesInterface lines){
         this.stops = stops;
@@ -17,9 +17,10 @@ public class ConnectionSearch {
     }
 
     //nechces si ten list obalit do triedy ConnectionData? lebo tak by to bolo cistejsie a na prvy pohlad by bolo vidno co to je, ale to len detail :D
+    //EDIT: obalil som vysledny list do triedy ConnectionData
     
-    public List<Triplet<StopName,Time,LineName>> search(StopName from, StopName to, Time when){
-        LinkedList<Triplet<StopName,Time,LineName>> result = new LinkedList<>();
+    public ConnectionData search(StopName from, StopName to, Time when){
+        ConnectionData result = new ConnectionData();
         stops.resetReachable();
         stops.setStartingStop(from, when);
         StopName currentStop = from;

@@ -20,7 +20,7 @@ public class MemoryIntegrationTest {
     @Test
     public void test(){
         setup();
-        List<Triplet<StopName,Time,LineName>> result = cs.search(new StopName("a"),new StopName("c"),new Time(1));
+        List<Triplet<StopName,Time,LineName>> result = cs.search(new StopName("a"),new StopName("c"),new Time(1)).getData();
         assertEquals("a", result.get(0).getX().getStopName());
         assertEquals(new Time(1), result.get(0).getY());
         assertNull(result.get(0).getZ());

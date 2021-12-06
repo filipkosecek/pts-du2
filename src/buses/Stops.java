@@ -28,6 +28,7 @@ public class Stops implements StopsInterface{
     }
 
     // toto si preco cez try, nie ako setStartingStop? len ma zaujima :D
+    //EDIT: fixnute
     public ArrayList<LineName> getLines(StopName stop){
         if(!stops.containsKey(stop)){
             stops.put(stop, factory.createStop(stop));

@@ -27,7 +27,7 @@ public class Line {
     }
 
     public void updateReachable(Time time, StopName stopName){
-        if(startingTimes.size() <= 0) throw new RuntimeException(); //moze byt velkost mensia ako nula? :D
+        //moze byt velkost mensia ako nula? :D EDIT: vymazal som to
         Time firstStartingTime = startingTimes.get(0);
         Time tmp = new Time(firstStartingTime.getTime());
         int timeToDesiredStop = 0;
