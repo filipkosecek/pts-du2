@@ -1,0 +1,1 @@
+The project contains a simple Makefile - UNIX only. By executing make create a new database file will be created deleting the old one if present. By executing make clean the file database.db will be removed. Sqlite3 database was used in this project.
